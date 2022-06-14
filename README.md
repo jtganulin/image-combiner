@@ -1,3 +1,4 @@
+
 # image-combiner
 
 This project allows a user to input two images and create a side-by-side composite image, either in horizontal or vertical orientation.  
