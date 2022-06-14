@@ -2,11 +2,44 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <StartupObject>ImageCombiner.Program</StartupObject>
+    <ApplicationIcon>ImageCombiner.ico</ApplicationIcon>
+    <ErrorReport>none</ErrorReport>
+    <PackageIcon>ImageCombiner.png</PackageIcon>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <Authors>Jeffrey Ganulin</Authors>
+    <Description>Combines two separate images into a vertical or horizontal composite.</Description>
+    <PackageProjectUrl>https://github.com/jtganulin/image-combiner</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/jtganulin/image-combiner</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <IsPublishable>False</IsPublishable>
+    <Product>Image Combiner</Product>
+    <AssemblyName>Image Combiner</AssemblyName>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="ImageCombiner.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\Desktop\ImageCombiner.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Magick.NET-Q8-AnyCPU" Version="11.1.2" />

@@ -73,6 +73,16 @@ namespace ImageCombiner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ImageCombiner {
+            get {
+                object obj = ResourceManager.GetObject("ImageCombiner", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LoadingImg {
             get {
                 object obj = ResourceManager.GetObject("LoadingImg", resourceCulture);

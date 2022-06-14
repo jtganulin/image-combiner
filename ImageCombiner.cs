@@ -1,12 +1,12 @@
 namespace ImageCombiner
 {
-	public partial class Form1 : Form
+	public partial class ImageCombiner : Form
 	{
-		private string leftImgFileName = "";
-		private string rightImgFileName = "";
-		private string orientation = "+append"; // IM has +append = Horizontal and -append = Vertical
+		private string leftImgFilePath = "";
+		private string rightImgFilePath = "";
+		private char orientation = 'h';
 
-		public Form1()
+		public ImageCombiner()
 		{
 			InitializeComponent();
 
@@ -19,7 +19,7 @@ namespace ImageCombiner
 				// Switch to Horizontal Mode
 				img1Lbl.Text = "Left Image";
 				img2Lbl.Text = "Right Image";
-				orientation = "+append";
+				orientation ='h';
 			}
 		}
 
@@ -30,7 +30,7 @@ namespace ImageCombiner
 				// Switch to Vertical Mode
 				img1Lbl.Text = "Bottom Image";
 				img2Lbl.Text = "Top Image";
-				orientation = "-append";
+				orientation = 'v';
 			}
 		}
 
@@ -45,9 +45,9 @@ namespace ImageCombiner
 		{
 			// Combine images
 			// Need to check if both images are populated and valid
-			if (String.IsNullOrEmpty(leftImgFileName) || String.IsNullOrEmpty(rightImgFileName))
+			if (String.IsNullOrEmpty(leftImgFilePath) || String.IsNullOrEmpty(rightImgFilePath))
             {
-				if (orientation == "+append")
+				if (orientation == 'h')
                 {
 					MessageBox.Show("Please add both a left and right image", "Missing an Image", MessageBoxButtons.OK);
                 } else
@@ -56,10 +56,19 @@ namespace ImageCombiner
                 }
             } else
             {
-				MessageBox.Show("Combining " + leftImgFileName + " and " + rightImgFileName);
-				
+				MessageBox.Show("Combining " + leftImgFilePath + " and " + rightImgFilePath);
+				var result = new ResultForm(leftImgFilePath, rightImgFilePath, orientation).ShowDialog(this);
+				if (result == DialogResult.Yes)
+                {
+					// User saved the image
 
-            }
+                }
+				else
+                {
+					// User closed the dialog without saving
+
+                }
+			}
 		}
 
 		private void leftImg_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
@@ -87,15 +96,16 @@ namespace ImageCombiner
 
 		private void rightImg_DoubleClick(object sender, EventArgs e)
 		{
-			loadImage((PictureBox)sender);
+			LoadImageWithFileDialog((PictureBox)sender);
 		}
 
 		private void leftImg_DoubleClick(object sender, EventArgs e)
 		{
-			loadImage((PictureBox)sender);
+			LoadImageWithFileDialog((PictureBox)sender);
 		}
 
-		private void loadImage(PictureBox sender)
+		// Would like to use EXIF information to show the image in its correct orientation
+		private void LoadImageWithFileDialog(PictureBox sender)
 		{
 			using (OpenFileDialog openFileDialog = new OpenFileDialog())
 			{
@@ -107,7 +117,7 @@ namespace ImageCombiner
 						try
 						{
 							leftImg.LoadAsync(openFileDialog.FileName);
-							leftImgFileName = openFileDialog.FileName;
+							leftImgFilePath = openFileDialog.FileName;
 						} catch (IOException e)
                         {
 							MessageBox.Show("There was an error:\n" + e.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
@@ -117,7 +127,7 @@ namespace ImageCombiner
 					{
 						try
 						{
-							rightImgFileName = openFileDialog.FileName;
+							rightImgFilePath = openFileDialog.FileName;
 							rightImg.LoadAsync(openFileDialog.FileName);
 						}
 						catch (IOException e)
@@ -153,6 +163,7 @@ namespace ImageCombiner
 			}
 		}
 
+		// Could condense both dragdrops
         private void leftImg_DragDrop(object sender, DragEventArgs e)
         {
 			if (e.Data != null)
@@ -160,14 +171,13 @@ namespace ImageCombiner
                 string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 				// There should only be one file, but if more were dropped, choose first one
 				if (filenames.Length > 0) {
-					leftImgFileName = filenames[0];
+					leftImgFilePath = filenames[0];
 					try
 					{
 						leftImg.LoadAsync(filenames[0]);
 					} catch (IOException ex)
 					{
 						MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
-
 					}
 				}
 			}
@@ -181,7 +191,7 @@ namespace ImageCombiner
 				// There should only be one file, but if more were dropped, choose first one
 				if (filenames.Length > 0)
 				{
-					rightImgFileName = filenames[0];
+					rightImgFilePath = filenames[0];
 					try
 					{
 						rightImg.LoadAsync(filenames[0]);
@@ -189,10 +199,14 @@ namespace ImageCombiner
 					catch (IOException ex)
 					{
 						MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
-
 					}
 				}
 			}
 		}
+
+        private void btnAbout_Click(object sender, EventArgs e)
+        {
+			new AboutForm().ShowDialog();
+        }
     }
 }

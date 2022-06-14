@@ -1,6 +1,6 @@
 ﻿namespace ImageCombiner
 {
-    partial class Form1
+    partial class ImageCombiner
     {
         /// <summary>
         ///  Required designer variable.
@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageCombiner));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.leftPanel = new System.Windows.Forms.Panel();
             this.clearLeftBtn = new System.Windows.Forms.Button();
@@ -44,6 +45,8 @@
             this.combineBtn = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+            this.aboutPanel = new System.Windows.Forms.FlowLayoutPanel();
+            this.btnAbout = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.leftPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.leftImg)).BeginInit();
@@ -51,6 +54,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.rightImg)).BeginInit();
             this.tableLayoutPanel2.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
+            this.aboutPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -182,7 +186,7 @@
             | System.Windows.Forms.AnchorStyles.Left)));
             this.horizontalRadio.AutoSize = true;
             this.horizontalRadio.Checked = true;
-            this.horizontalRadio.Location = new System.Drawing.Point(122, 10);
+            this.horizontalRadio.Location = new System.Drawing.Point(123, 12);
             this.horizontalRadio.Margin = new System.Windows.Forms.Padding(0);
             this.horizontalRadio.Name = "horizontalRadio";
             this.horizontalRadio.Size = new System.Drawing.Size(80, 19);
@@ -198,7 +202,7 @@
             this.verticalRadio.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.verticalRadio.AutoSize = true;
-            this.verticalRadio.Location = new System.Drawing.Point(202, 10);
+            this.verticalRadio.Location = new System.Drawing.Point(203, 12);
             this.verticalRadio.Margin = new System.Windows.Forms.Padding(0);
             this.verticalRadio.Name = "verticalRadio";
             this.verticalRadio.Size = new System.Drawing.Size(63, 19);
@@ -213,7 +217,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(0, 10);
+            this.label1.Location = new System.Drawing.Point(1, 12);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(122, 19);
@@ -269,23 +273,49 @@
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Margin = new System.Windows.Forms.Padding(0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(0, 10, 0, 0);
+            this.flowLayoutPanel1.Padding = new System.Windows.Forms.Padding(1, 12, 0, 10);
             this.flowLayoutPanel1.Size = new System.Drawing.Size(615, 44);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
             // 
-            // Form1
+            // aboutPanel
+            // 
+            this.aboutPanel.Controls.Add(this.btnAbout);
+            this.aboutPanel.Location = new System.Drawing.Point(13, 393);
+            this.aboutPanel.Name = "aboutPanel";
+            this.aboutPanel.Padding = new System.Windows.Forms.Padding(0, 5, 0, 5);
+            this.aboutPanel.Size = new System.Drawing.Size(385, 43);
+            this.aboutPanel.TabIndex = 7;
+            this.aboutPanel.WrapContents = false;
+            // 
+            // btnAbout
+            // 
+            this.btnAbout.AutoSize = true;
+            this.btnAbout.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.btnAbout.Location = new System.Drawing.Point(0, 8);
+            this.btnAbout.Margin = new System.Windows.Forms.Padding(0, 3, 3, 3);
+            this.btnAbout.Name = "btnAbout";
+            this.btnAbout.Size = new System.Drawing.Size(74, 25);
+            this.btnAbout.TabIndex = 0;
+            this.btnAbout.TabStop = false;
+            this.btnAbout.Text = "About";
+            this.btnAbout.UseVisualStyleBackColor = true;
+            this.btnAbout.Click += new System.EventHandler(this.btnAbout_Click);
+            // 
+            // ImageCombiner
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.ClientSize = new System.Drawing.Size(800, 451);
+            this.ClientSize = new System.Drawing.Size(800, 439);
+            this.Controls.Add(this.aboutPanel);
             this.Controls.Add(this.tableLayoutPanel2);
             this.Controls.Add(this.tableLayoutPanel1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.Name = "Form1";
+            this.Name = "ImageCombiner";
             this.Padding = new System.Windows.Forms.Padding(8, 0, 8, 0);
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "Image Combiner";
@@ -300,6 +330,8 @@
             this.tableLayoutPanel2.PerformLayout();
             this.flowLayoutPanel1.ResumeLayout(false);
             this.flowLayoutPanel1.PerformLayout();
+            this.aboutPanel.ResumeLayout(false);
+            this.aboutPanel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -323,5 +355,7 @@
         private PictureBox rightImg;
         private TableLayoutPanel tableLayoutPanel2;
         private FlowLayoutPanel flowLayoutPanel1;
+        private FlowLayoutPanel aboutPanel;
+        private Button btnAbout;
     }
 }
