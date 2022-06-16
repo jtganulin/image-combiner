@@ -49,9 +49,9 @@ namespace ImageCombiner
             if (string.IsNullOrEmpty(leftImgFilePath) || string.IsNullOrEmpty(rightImgFilePath))
             {
                 if (orientation == 'h')
-                    MessageBox.Show("Please add both a left and right image", "Missing an Image", MessageBoxButtons.OK);
+                    MessageBox.Show("Please add both a left and right image.", "Missing an Image", MessageBoxButtons.OK);
                 else
-                    MessageBox.Show("Please add both a bottom and top image", "Missing an Image", MessageBoxButtons.OK);
+                    MessageBox.Show("Please add both a bottom and top image.", "Missing an Image", MessageBoxButtons.OK);
             }
             else
             {
@@ -211,8 +211,8 @@ namespace ImageCombiner
             if (e.Data is not null)
             {
                 string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-                // There should only be one file, but if more were dropped, choose first one
                 if (filenames.Length < 1) return;
+                // There should only be one file, but if more were dropped, choose first one
                 leftImgFilePath = filenames[0];
                 // Check the extension
                 string[] exts = new[] { ".JPG", ".PNG", ".BMP", ".GIF" };
@@ -224,7 +224,6 @@ namespace ImageCombiner
                         try
                         {
                             LoadImageAndFixOrientation(sender, filenames[0]);
-                            ((PictureBox)sender).LoadAsync(filenames[0]);
                             ToggleImageClearButton((PictureBox)sender);
                         }
                         catch (IOException ex)
