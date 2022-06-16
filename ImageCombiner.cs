@@ -1,212 +1,239 @@
 namespace ImageCombiner
 {
-	public partial class ImageCombiner : Form
-	{
-		private string leftImgFilePath = "";
-		private string rightImgFilePath = "";
-		private char orientation = 'h';
 
-		public ImageCombiner()
-		{
-			InitializeComponent();
+   // TODO: Add Documentation
+ 
+    public partial class ImageCombiner : Form
+    {
+        private string leftImgFilePath = "";
+        private string rightImgFilePath = "";
+        private char orientation = 'h';
 
-		}
-
-		private void horizontalRadio_CheckedChanged(object sender, EventArgs e)
-		{
-			if(horizontalRadio.Checked)
-			{
-				// Switch to Horizontal Mode
-				img1Lbl.Text = "Left Image";
-				img2Lbl.Text = "Right Image";
-				orientation ='h';
-			}
-		}
-
-		private void verticalRadio_CheckedChanged(object sender, EventArgs e)
-		{
-			if (verticalRadio.Checked)
-			{
-				// Switch to Vertical Mode
-				img1Lbl.Text = "Bottom Image";
-				img2Lbl.Text = "Top Image";
-				orientation = 'v';
-			}
-		}
-
-		private void resetBtn_Click(object sender, EventArgs e)
-		{
-			// Reset images
-			clearLeftBtn_Click(sender, e);
-			clearRightBtn_Click(sender, e);
-		}
-
-		private void combineBtn_Click(object sender, EventArgs e)
-		{
-			// Combine images
-			// Need to check if both images are populated and valid
-			if (String.IsNullOrEmpty(leftImgFilePath) || String.IsNullOrEmpty(rightImgFilePath))
-            {
-				if (orientation == 'h')
-                {
-					MessageBox.Show("Please add both a left and right image", "Missing an Image", MessageBoxButtons.OK);
-                } else
-                {
-					MessageBox.Show("Please add both a bottom and top image", "Missing an Image", MessageBoxButtons.OK);
-                }
-            } else
-            {
-				MessageBox.Show("Combining " + leftImgFilePath + " and " + rightImgFilePath);
-				var result = new ResultForm(leftImgFilePath, rightImgFilePath, orientation).ShowDialog(this);
-				if (result == DialogResult.Yes)
-                {
-					// User saved the image
-
-                }
-				else
-                {
-					// User closed the dialog without saving
-
-                }
-			}
-		}
-
-		private void leftImg_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-		{
-			// Show the clear button
-			clearLeftBtn.Visible = true;
-		}
-
-		private void rightImg_LoadCompleted(object sender, System.ComponentModel.AsyncCompletedEventArgs e)
-		{
-			clearRightBtn.Visible = true;
-		}
-
-		private void clearLeftBtn_Click(object sender, EventArgs e)
-		{
-			leftImg.Image = Properties.Resources.DefaultImg;
-			clearLeftBtn.Visible = false;
-		}
-
-		private void clearRightBtn_Click(object sender, EventArgs e)
-		{
-			rightImg.Image = Properties.Resources.DefaultImg;
-			clearRightBtn.Visible = false;
-		}
-
-		private void rightImg_DoubleClick(object sender, EventArgs e)
-		{
-			LoadImageWithFileDialog((PictureBox)sender);
-		}
-
-		private void leftImg_DoubleClick(object sender, EventArgs e)
-		{
-			LoadImageWithFileDialog((PictureBox)sender);
-		}
-
-		// Would like to use EXIF information to show the image in its correct orientation
-		private void LoadImageWithFileDialog(PictureBox sender)
-		{
-			using (OpenFileDialog openFileDialog = new OpenFileDialog())
-			{
-				openFileDialog.Filter = "Image Files ( *.JPG; *.GIF; *.PNG; *.BMP;)|*.JPG; *.GIF; *.PNG; *.BMP";
-				if (openFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					if (sender.Tag as string == "leftImg")
-					{
-						try
-						{
-							leftImg.LoadAsync(openFileDialog.FileName);
-							leftImgFilePath = openFileDialog.FileName;
-						} catch (IOException e)
-                        {
-							MessageBox.Show("There was an error:\n" + e.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
-                        }
-					}
-					else if (sender.Tag as string == "rightImg")
-					{
-						try
-						{
-							rightImgFilePath = openFileDialog.FileName;
-							rightImg.LoadAsync(openFileDialog.FileName);
-						}
-						catch (IOException e)
-						{
-							MessageBox.Show("There was an error:\n" + e.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
-						}
-						
-					}
-				}
-			}		
-		}
-
-        private void leftImg_DragEnter(object sender, DragEventArgs e)
+        public ImageCombiner()
         {
-			if (e.Data is not null && e.Data.GetDataPresent(DataFormats.FileDrop))
+            InitializeComponent();
+        }
+
+        private void horizontalRadio_CheckedChanged(object sender, EventArgs e)
+        {
+            if (horizontalRadio.Checked)
             {
-				e.Effect = DragDropEffects.Copy;
-            } else
+                // Switch to Horizontal Mode
+                img1Lbl.Text = "Left Image";
+                img2Lbl.Text = "Right Image";
+                orientation = 'h';
+            }
+            else if (verticalRadio.Checked)
             {
-				e.Effect = DragDropEffects.None;
+                // Switch to Vertical Mode
+                img1Lbl.Text = "Bottom Image";
+                img2Lbl.Text = "Top Image";
+                orientation = 'v';
             }
         }
 
-        private void rightImg_DragEnter(object sender, DragEventArgs e)
+        private void resetBtn_Click(object sender, EventArgs e)
         {
-			if (e.Data is not null && e.Data.GetDataPresent(DataFormats.FileDrop))
-			{
-				e.Effect = DragDropEffects.Copy;
-			}
-			else
-			{
-				e.Effect = DragDropEffects.None;
-			}
-		}
-
-		// Could condense both dragdrops
-        private void leftImg_DragDrop(object sender, DragEventArgs e)
-        {
-			if (e.Data != null)
-			{
-                string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-				// There should only be one file, but if more were dropped, choose first one
-				if (filenames.Length > 0) {
-					leftImgFilePath = filenames[0];
-					try
-					{
-						leftImg.LoadAsync(filenames[0]);
-					} catch (IOException ex)
-					{
-						MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
-					}
-				}
-			}
+            // Reset images
+            ClearImage(sender, e);
         }
-
-        private void rightImg_DragDrop(object sender, DragEventArgs e)
-        {
-			if (e.Data != null)
-			{
-				string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-				// There should only be one file, but if more were dropped, choose first one
-				if (filenames.Length > 0)
-				{
-					rightImgFilePath = filenames[0];
-					try
-					{
-						rightImg.LoadAsync(filenames[0]);
-					}
-					catch (IOException ex)
-					{
-						MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
-					}
-				}
-			}
-		}
 
         private void btnAbout_Click(object sender, EventArgs e)
         {
-			new AboutForm().ShowDialog();
+            new AboutForm().ShowDialog();
+        }
+
+        private void combineBtn_Click(object sender, EventArgs e)
+        {
+            // Need to check if both images are populated and valid
+            if (string.IsNullOrEmpty(leftImgFilePath) || string.IsNullOrEmpty(rightImgFilePath))
+            {
+                if (orientation == 'h')
+                    MessageBox.Show("Please add both a left and right image", "Missing an Image", MessageBoxButtons.OK);
+                else
+                    MessageBox.Show("Please add both a bottom and top image", "Missing an Image", MessageBoxButtons.OK);
+            }
+            else
+            {
+                ResultForm resultForm = new ResultForm(leftImgFilePath, rightImgFilePath, orientation);
+                DialogResult result = resultForm.ShowDialog(this);
+                //switch (result)
+                //{
+                //    case DialogResult.Yes:
+                //        // User saved the image
+                //        MessageBox.Show("Operation succeeded.");
+                //        resultForm.Close();
+                //        break;
+                //    case DialogResult.No:
+                //        // User closed the dialog without saving
+                //        MessageBox.Show("Operation canceled.");
+                //        resultForm.Close();
+                //        break;
+                //    case DialogResult.Abort:
+                //        // There was an error with a file path or orientation flag
+                //        MessageBox.Show(new ArgumentException("There was an error combinging the images.\nPlease try again,").Message.ToString());
+                //        break;
+                //}
+            }
+        }
+
+        private void ToggleImageClearButton(PictureBox pb)
+        {
+            if (pb.Tag as string == "leftImg")
+            {
+                if (this.clearLeftBtn.Visible)
+                    this.clearLeftBtn.Visible = false;
+                else
+                    this.clearLeftBtn.Visible = true;
+            }
+            else if (pb.Tag as string == "rightImg")
+            {
+                if (this.clearRightBtn.Visible)
+                    this.clearRightBtn.Visible = false;
+                else
+                    this.clearRightBtn.Visible = true;
+            }
+        }
+
+        public void ClearImage(object sender, EventArgs e)
+        {
+            string t = ((Button)sender).Tag as string ?? "";
+            if (t == "resetBtn")
+            {
+                leftImg.Image = Properties.Resources.DefaultImg;
+                clearLeftBtn.Visible = false;
+                rightImg.Image = Properties.Resources.DefaultImg;
+                clearRightBtn.Visible = false;
+                leftImgFilePath = rightImgFilePath = "";
+            }
+            else if (t == "clearLeftBtn")
+            {
+                leftImg.Image = Properties.Resources.DefaultImg;
+                clearLeftBtn.Visible = false;
+                leftImgFilePath = "";
+            }
+            else
+            {
+                rightImg.Image = Properties.Resources.DefaultImg;
+                clearRightBtn.Visible = false;
+                rightImgFilePath = "";
+            }
+        }
+
+        private void SelectImageWithFileDialog(object sender, EventArgs e)
+        {
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "Image Files ( *.JPG; *.GIF; *.PNG; *.BMP;)|*.JPG; *.GIF; *.PNG; *.BMP";
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        LoadImageAndFixOrientation(sender, openFileDialog.FileName);
+                    }
+                    catch (IOException ex)
+                    {
+                        MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
+                    }
+                }
+            }
+        }
+
+        private void LoadImageAndFixOrientation(object sender, string filepath)
+        {
+            try
+            {
+                Image image = Image.FromFile(filepath);
+
+                // Get the EXIF info from the image, check its orientation, and display it properly in the PictureBox
+                #pragma warning disable CS8602 // Dereference of a possibly null reference.
+                if (Array.IndexOf(image.PropertyIdList, 274) > -1 && image.GetPropertyItem(274).Value[0] >= 1 && image.GetPropertyItem(274).Value[0] <= 8)
+                {
+                    switch (image.GetPropertyItem(274).Value[0])
+                    {
+                        case 2:
+                            image.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                            break;
+                        case 3:
+                            image.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                            break;
+                        case 4:
+                            image.RotateFlip(RotateFlipType.Rotate180FlipX);
+                            break;
+                        case 5:
+                            image.RotateFlip(RotateFlipType.Rotate90FlipX);
+                            break;
+                        case 6:
+                            image.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                            break;
+                        case 7:
+                            image.RotateFlip(RotateFlipType.Rotate270FlipX);
+                            break;
+                        case 8:
+                            image.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                            break;
+                    }
+                    image.RemovePropertyItem(274);
+                }
+                #pragma warning restore CS8602 // Dereference of a possibly null reference.
+
+                ((PictureBox)sender).Image = image;
+
+                if (((PictureBox)sender).Tag as string == "leftImg")
+                    leftImgFilePath = filepath;
+                else
+                    rightImgFilePath = filepath;
+
+                ToggleImageClearButton((PictureBox)sender);
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message.ToString());
+            }
+        }
+
+        private void DragEnterEffects(object sender, DragEventArgs e)
+        {
+            if (e.Data is not null && e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        // TODO: Allow drag/drop between PBs to swap images
+
+        private void DragDropLoad(object sender, DragEventArgs e)
+        {
+            if (e.Data is not null)
+            {
+                string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+                // There should only be one file, but if more were dropped, choose first one
+                if (filenames.Length < 1) return;
+                leftImgFilePath = filenames[0];
+                // Check the extension
+                string[] exts = new[] { ".JPG", ".PNG", ".BMP", ".GIF" };
+
+                foreach (string ext in exts)
+                {
+                    if (Path.GetExtension(leftImgFilePath).ToUpper().Equals(ext))
+                    {
+                        try
+                        {
+                            LoadImageAndFixOrientation(sender, filenames[0]);
+                            ((PictureBox)sender).LoadAsync(filenames[0]);
+                            ToggleImageClearButton((PictureBox)sender);
+                        }
+                        catch (IOException ex)
+                        {
+                            MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
+                        }
+                    }
+                }
+            }
         }
     }
 }

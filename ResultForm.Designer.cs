@@ -67,7 +67,7 @@
             this.imgCombineResult.Location = new System.Drawing.Point(3, 33);
             this.imgCombineResult.Name = "imgCombineResult";
             this.imgCombineResult.Size = new System.Drawing.Size(770, 339);
-            this.imgCombineResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgCombineResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgCombineResult.TabIndex = 0;
             this.imgCombineResult.TabStop = false;
             this.imgCombineResult.Tag = "imgCombineResult";
@@ -103,9 +103,10 @@
             this.btnSave.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(127, 44);
-            this.btnSave.TabIndex = 0;
+            this.btnSave.TabIndex = 1;
             this.btnSave.Text = "Save Image...";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
             // 
@@ -115,12 +116,12 @@
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(92, 44);
-            this.btnClose.TabIndex = 1;
+            this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
             // 
-            // FormCombineHorizontal
+            // ResultForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -128,7 +129,7 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormCombineHorizontal";
+            this.Name = "ResultForm";
             this.Text = "Combination Result";
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
@@ -138,7 +139,7 @@
             this.ResumeLayout(false);
 
         }
-        
+
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ResultForm));
@@ -148,6 +149,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.noteLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imgCombineResult)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -159,7 +161,7 @@
             this.imgCombineResult.Location = new System.Drawing.Point(5, 27);
             this.imgCombineResult.Name = "imgCombineResult";
             this.imgCombineResult.Size = new System.Drawing.Size(603, 583);
-            this.imgCombineResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.imgCombineResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.imgCombineResult.TabIndex = 0;
             this.imgCombineResult.TabStop = false;
             this.imgCombineResult.Tag = "imgCombineResult";
@@ -180,35 +182,34 @@
             this.flowLayoutPanel1.Controls.Add(this.btnSave);
             this.flowLayoutPanel1.Controls.Add(this.btnClose);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(5, 616);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(389, 616);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(606, 44);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(222, 44);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
             // 
             // btnSave
             // 
             this.btnSave.AutoSize = true;
-            this.btnSave.DialogResult = System.Windows.Forms.DialogResult.Yes;
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSave.Location = new System.Drawing.Point(476, 0);
+            this.btnSave.Location = new System.Drawing.Point(92, 0);
             this.btnSave.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(127, 44);
-            this.btnSave.TabIndex = 0;
+            this.btnSave.TabIndex = 1;
             this.btnSave.Text = "Save Image...";
             this.btnSave.UseVisualStyleBackColor = true;
+            this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
             // btnClose
             // 
             this.btnClose.AutoSize = true;
-            this.btnClose.DialogResult = System.Windows.Forms.DialogResult.No;
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnClose.Location = new System.Drawing.Point(384, 0);
+            this.btnClose.Location = new System.Drawing.Point(0, 0);
             this.btnClose.Margin = new System.Windows.Forms.Padding(0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(92, 44);
-            this.btnClose.TabIndex = 1;
+            this.btnClose.TabIndex = 2;
             this.btnClose.Text = "Close";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
@@ -217,12 +218,23 @@
             // 
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.imgCombineResult);
+            this.panel1.Controls.Add(this.noteLbl);
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(614, 672);
             this.panel1.TabIndex = 1;
+            // 
+            // noteLbl
+            // 
+            this.noteLbl.AutoSize = true;
+            this.noteLbl.Location = new System.Drawing.Point(53, 623);
+            this.noteLbl.Name = "noteLbl";
+            this.noteLbl.Size = new System.Drawing.Size(279, 30);
+            this.noteLbl.TabIndex = 3;
+            this.noteLbl.Text = "Note: The image you see here is only a preview, and\r\nmay have different dimension" +
+    "s once you save it.";
             // 
             // ResultForm
             // 
@@ -252,5 +264,6 @@
         private Label label1;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel1;
+        private Label noteLbl;
     }
 }
