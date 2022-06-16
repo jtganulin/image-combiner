@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Diagnostics;
 
 namespace ImageCombiner
 {
@@ -19,7 +11,7 @@ namespace ImageCombiner
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo 
+            Process.Start(new ProcessStartInfo 
             {
                 FileName = "https://github.com/dlemstra/Magick.NET/",
                 UseShellExecute = true
@@ -28,7 +20,7 @@ namespace ImageCombiner
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            Process.Start(new ProcessStartInfo
             {
                 FileName = "mailto:jtganulin@jgproductions.x10.bz",
                 UseShellExecute = true
@@ -37,7 +29,7 @@ namespace ImageCombiner
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo
+            Process.Start(new ProcessStartInfo
             {
                 FileName = "https://github.com/jtganulin/image-combiner",
                 UseShellExecute = true

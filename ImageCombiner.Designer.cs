@@ -98,7 +98,7 @@
             this.clearLeftBtn.Text = "Clear";
             this.clearLeftBtn.UseVisualStyleBackColor = true;
             this.clearLeftBtn.Visible = false;
-            this.clearLeftBtn.Click += new System.EventHandler(this.clearLeftBtn_Click);
+            this.clearLeftBtn.Click += new System.EventHandler(this.ClearImage);
             // 
             // leftImg
             // 
@@ -110,14 +110,13 @@
             this.leftImg.Location = new System.Drawing.Point(13, 41);
             this.leftImg.Name = "leftImg";
             this.leftImg.Size = new System.Drawing.Size(352, 248);
-            this.leftImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.leftImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.leftImg.TabIndex = 2;
             this.leftImg.TabStop = false;
             this.leftImg.Tag = "leftImg";
-            this.leftImg.LoadCompleted += new System.ComponentModel.AsyncCompletedEventHandler(this.leftImg_LoadCompleted);
-            this.leftImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.leftImg_DragDrop);
-            this.leftImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.leftImg_DragEnter);
-            this.leftImg.DoubleClick += new System.EventHandler(this.leftImg_DoubleClick);
+            this.leftImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropLoad);
+            this.leftImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEffects);
+            this.leftImg.DoubleClick += new System.EventHandler(this.SelectImageWithFileDialog);
             // 
             // img1Lbl
             // 
@@ -150,7 +149,7 @@
             this.clearRightBtn.Text = "Clear";
             this.clearRightBtn.UseVisualStyleBackColor = true;
             this.clearRightBtn.Visible = false;
-            this.clearRightBtn.Click += new System.EventHandler(this.clearRightBtn_Click);
+            this.clearRightBtn.Click += new System.EventHandler(this.ClearImage);
             // 
             // rightImg
             // 
@@ -161,15 +160,14 @@
             this.rightImg.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
             this.rightImg.Location = new System.Drawing.Point(14, 42);
             this.rightImg.Name = "rightImg";
-            this.rightImg.Size = new System.Drawing.Size(352, 248);
-            this.rightImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.rightImg.Size = new System.Drawing.Size(350, 250);
+            this.rightImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.rightImg.TabIndex = 3;
             this.rightImg.TabStop = false;
             this.rightImg.Tag = "rightImg";
-            this.rightImg.LoadCompleted += new System.ComponentModel.AsyncCompletedEventHandler(this.rightImg_LoadCompleted);
-            this.rightImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.rightImg_DragDrop);
-            this.rightImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.rightImg_DragEnter);
-            this.rightImg.DoubleClick += new System.EventHandler(this.rightImg_DoubleClick);
+            this.rightImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropLoad);
+            this.rightImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEffects);
+            this.rightImg.DoubleClick += new System.EventHandler(this.SelectImageWithFileDialog);
             // 
             // img2Lbl
             // 
@@ -210,7 +208,6 @@
             this.verticalRadio.Text = "Vertical";
             this.verticalRadio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.verticalRadio.UseVisualStyleBackColor = true;
-            this.verticalRadio.CheckedChanged += new System.EventHandler(this.verticalRadio_CheckedChanged);
             // 
             // label1
             // 
@@ -232,6 +229,7 @@
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(75, 38);
             this.resetBtn.TabIndex = 4;
+            this.resetBtn.Tag = "resetBtn";
             this.resetBtn.Text = "Reset";
             this.resetBtn.UseVisualStyleBackColor = true;
             this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
