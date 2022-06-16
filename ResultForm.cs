@@ -3,6 +3,9 @@ using System.Drawing.Imaging;
 
 namespace ImageCombiner
 {
+
+    // TODO: Clean up variables, fields, and control IDs
+
     public partial class ResultForm : Form
     {
         private string leftImagePath, rightImagePath;
@@ -20,8 +23,16 @@ namespace ImageCombiner
                 InitializeComponentHorizontal();
             else
                 InitializeComponent();
-            
-            CombineImage();
+
+            try
+            {
+                Thread th = new(() => CombineImage());
+                th.Start();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void btnClose_Click(object sender, EventArgs e)
@@ -48,8 +59,8 @@ namespace ImageCombiner
                         using (FileStream fs = new(saveFileDialog.FileName, FileMode.Create))
                         {
                             Image image = resultImg.ToBitmap();
-
                             // TODO: Right now saving as JPEG, but would like to get the format from the provided images
+                            //       or give an option.
                             image.Save(fs, ImageFormat.Jpeg);
                         }
                     }
@@ -64,63 +75,63 @@ namespace ImageCombiner
         // TODO: Would like to retain EXIF date information
         private void CombineImage()
         {
-            if (string.IsNullOrEmpty(leftImagePath) || string.IsNullOrEmpty(rightImagePath) || Array.IndexOf(new[] {'h', 'v'}, orientation) < 0)
-                this.DialogResult = DialogResult.Abort;
-            else
+            imgCombineResult.Image = Properties.Resources.PleaseWait;
+            if (string.IsNullOrEmpty(leftImagePath) || string.IsNullOrEmpty(rightImagePath) || Array.IndexOf(new[] { 'h', 'v' }, orientation) < 0)
             {
-                using (MagickImageCollection collection = new())
+                this.DialogResult = DialogResult.Abort;
+                return;
+            }
+
+            using (MagickImageCollection collection = new())
+            {
+                // TODO: Make sure both images exist
+                Image[] images = new[] { Image.FromFile(leftImagePath), Image.FromFile(rightImagePath) };
+                foreach (Image img in images)
                 {
-                    Image[] images = new[] { Image.FromFile(leftImagePath), Image.FromFile(rightImagePath) };
-                    foreach (Image img in images)
-                    {
                     #pragma warning disable CS8602 // Dereference of a possibly null reference. ...Value[0] won't be accessed if it's not in the property list
-                        if (Array.IndexOf(img.PropertyIdList, 274) > -1 && (img.GetPropertyItem(274).Value[0] >= 1 && img.GetPropertyItem(274).Value[0] <= 8))
+                    if (Array.IndexOf(img.PropertyIdList, 274) > -1 && (img.GetPropertyItem(274).Value[0] >= 1 && img.GetPropertyItem(274).Value[0] <= 8))
+                    {
+                        switch (img.GetPropertyItem(274).Value[0])
                         {
-                            switch (img.GetPropertyItem(274).Value[0])
-                            {
-                                case 2:
-                                    img.RotateFlip(RotateFlipType.RotateNoneFlipX);
-                                    break;
-                                case 3:
-                                    img.RotateFlip(RotateFlipType.Rotate180FlipNone);
-                                    break;
-                                case 4:
-                                    img.RotateFlip(RotateFlipType.Rotate180FlipX);
-                                    break;
-                                case 5:
-                                    img.RotateFlip(RotateFlipType.Rotate90FlipX);
-                                    break;
-                                case 6:
-                                    img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-                                    break;
-                                case 7:
-                                    img.RotateFlip(RotateFlipType.Rotate270FlipX);
-                                    break;
-                                case 8:
-                                    img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-                                    break;
-                            }
-
-                            img.RemovePropertyItem(274);
+                            case 2:
+                                img.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                                break;
+                            case 3:
+                                img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                                break;
+                            case 4:
+                                img.RotateFlip(RotateFlipType.Rotate180FlipX);
+                                break;
+                            case 5:
+                                img.RotateFlip(RotateFlipType.Rotate90FlipX);
+                                break;
+                            case 6:
+                                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                                break;
+                            case 7:
+                                img.RotateFlip(RotateFlipType.Rotate270FlipX);
+                                break;
+                            case 8:
+                                img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                                break;
                         }
-                    #pragma warning restore CS8602 // Dereference of a possibly null reference.
-
-                        var mf = new MagickFactory();
-                        collection.Add(new MagickImage(mf.Image.Create(new Bitmap(img))));
-
-                        if (orientation == 'h')
-                            resultImg = (MagickImage)collection.AppendHorizontally();
-                        else
-                        {
-                            // Vertical append composes the images in opposite of desired order
-                            collection.Reverse();
-                            resultImg = (MagickImage)collection.AppendVertically();
-                        }
-
-                        // Show combined preview in result PictureBox
-                        this.imgCombineResult.Image = resultImg.ToBitmap();
+                        img.RemovePropertyItem(274);
                     }
+                    #pragma warning restore CS8602 // Dereference of a possibly null 
+                    collection.Add(new MagickImage(new MagickFactory().Image.Create(new Bitmap(img))));
                 }
+
+                if (orientation == 'h')
+                    resultImg = (MagickImage)collection.AppendHorizontally();
+                else
+                {
+                    // Vertical append composes the images opposite of desired order
+                    collection.Reverse();
+                    resultImg = (MagickImage)collection.AppendVertically();
+                }
+
+                // Show combined preview in result PictureBox
+                imgCombineResult.Image = Image.FromStream(new MemoryStream(resultImg.ToByteArray()));
             }
         }
     }

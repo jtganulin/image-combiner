@@ -79,6 +79,7 @@
             // leftPanel
             // 
             this.leftPanel.AllowDrop = true;
+            this.leftPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.leftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.leftPanel.Controls.Add(this.clearLeftBtn);
             this.leftPanel.Controls.Add(this.leftImg);
@@ -103,11 +104,16 @@
             // leftImg
             // 
             this.leftImg.AllowDrop = true;
-            this.leftImg.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.leftImg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.leftImg.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.leftImg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.leftImg.Cursor = System.Windows.Forms.Cursors.Hand;
             this.leftImg.Image = global::ImageCombiner.Properties.Resources.DefaultImg;
             this.leftImg.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
             this.leftImg.Location = new System.Drawing.Point(13, 41);
+            this.leftImg.Margin = new System.Windows.Forms.Padding(0);
             this.leftImg.Name = "leftImg";
             this.leftImg.Size = new System.Drawing.Size(352, 248);
             this.leftImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
@@ -120,8 +126,11 @@
             // 
             // img1Lbl
             // 
+            this.img1Lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.img1Lbl.AutoSize = true;
             this.img1Lbl.Location = new System.Drawing.Point(150, 13);
+            this.img1Lbl.Margin = new System.Windows.Forms.Padding(0);
             this.img1Lbl.Name = "img1Lbl";
             this.img1Lbl.Size = new System.Drawing.Size(63, 15);
             this.img1Lbl.TabIndex = 1;
@@ -130,6 +139,7 @@
             // rightPanel
             // 
             this.rightPanel.AllowDrop = true;
+            this.rightPanel.BackColor = System.Drawing.Color.WhiteSmoke;
             this.rightPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.rightPanel.Controls.Add(this.clearRightBtn);
             this.rightPanel.Controls.Add(this.rightImg);
@@ -154,13 +164,18 @@
             // rightImg
             // 
             this.rightImg.AllowDrop = true;
-            this.rightImg.BackColor = System.Drawing.SystemColors.ControlLight;
+            this.rightImg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.rightImg.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.rightImg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.rightImg.Cursor = System.Windows.Forms.Cursors.Hand;
             this.rightImg.Image = global::ImageCombiner.Properties.Resources.DefaultImg;
             this.rightImg.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
-            this.rightImg.Location = new System.Drawing.Point(14, 42);
+            this.rightImg.Location = new System.Drawing.Point(14, 41);
+            this.rightImg.Margin = new System.Windows.Forms.Padding(0);
             this.rightImg.Name = "rightImg";
-            this.rightImg.Size = new System.Drawing.Size(350, 250);
+            this.rightImg.Size = new System.Drawing.Size(352, 248);
             this.rightImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.rightImg.TabIndex = 3;
             this.rightImg.TabStop = false;
@@ -171,12 +186,16 @@
             // 
             // img2Lbl
             // 
+            this.img2Lbl.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.img2Lbl.AutoSize = true;
             this.img2Lbl.Location = new System.Drawing.Point(156, 13);
+            this.img2Lbl.Margin = new System.Windows.Forms.Padding(0);
             this.img2Lbl.Name = "img2Lbl";
             this.img2Lbl.Size = new System.Drawing.Size(71, 15);
             this.img2Lbl.TabIndex = 0;
             this.img2Lbl.Text = "Right Image";
+            this.img2Lbl.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // horizontalRadio
             // 
@@ -307,6 +326,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(800, 439);
             this.Controls.Add(this.aboutPanel);
             this.Controls.Add(this.tableLayoutPanel2);

@@ -20,6 +20,8 @@
             base.Dispose(disposing);
         }
 
+        // TODO: Need noteLbl to appear on both orientation layouts
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -64,6 +66,7 @@
             // 
             this.imgCombineResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.tableLayoutPanel1.SetColumnSpan(this.imgCombineResult, 2);
+            this.imgCombineResult.BackColor = System.Drawing.SystemColors.ControlDark;
             this.imgCombineResult.Location = new System.Drawing.Point(3, 33);
             this.imgCombineResult.Name = "imgCombineResult";
             this.imgCombineResult.Size = new System.Drawing.Size(770, 339);
@@ -113,7 +116,7 @@
             this.btnClose.AutoSize = true;
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Top;
             this.btnClose.Location = new System.Drawing.Point(384, 0);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(92, 44);
             this.btnClose.TabIndex = 2;
@@ -129,6 +132,8 @@
             this.Controls.Add(this.tableLayoutPanel1);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
+            this.BackColor = System.Drawing.Color.White;
+
             this.Name = "ResultForm";
             this.Text = "Combination Result";
             this.tableLayoutPanel1.ResumeLayout(false);
@@ -158,10 +163,12 @@
             // imgCombineResult
             // 
             this.imgCombineResult.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.imgCombineResult.Image = global::ImageCombiner.Properties.Resources.PleaseWait;
             this.imgCombineResult.Location = new System.Drawing.Point(5, 27);
             this.imgCombineResult.Name = "imgCombineResult";
             this.imgCombineResult.Size = new System.Drawing.Size(603, 583);
             this.imgCombineResult.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.imgCombineResult.BackColor = System.Drawing.SystemColors.ControlDark;
             this.imgCombineResult.TabIndex = 0;
             this.imgCombineResult.TabStop = false;
             this.imgCombineResult.Tag = "imgCombineResult";
@@ -182,9 +189,9 @@
             this.flowLayoutPanel1.Controls.Add(this.btnSave);
             this.flowLayoutPanel1.Controls.Add(this.btnClose);
             this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft;
-            this.flowLayoutPanel1.Location = new System.Drawing.Point(389, 616);
+            this.flowLayoutPanel1.Location = new System.Drawing.Point(380, 616);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(222, 44);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(231, 44);
             this.flowLayoutPanel1.TabIndex = 0;
             this.flowLayoutPanel1.WrapContents = false;
             // 
@@ -192,7 +199,7 @@
             // 
             this.btnSave.AutoSize = true;
             this.btnSave.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnSave.Location = new System.Drawing.Point(92, 0);
+            this.btnSave.Location = new System.Drawing.Point(101, 0);
             this.btnSave.Margin = new System.Windows.Forms.Padding(0, 0, 3, 0);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(127, 44);
@@ -205,8 +212,8 @@
             // 
             this.btnClose.AutoSize = true;
             this.btnClose.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btnClose.Location = new System.Drawing.Point(0, 0);
-            this.btnClose.Margin = new System.Windows.Forms.Padding(0);
+            this.btnClose.Location = new System.Drawing.Point(4, 0);
+            this.btnClose.Margin = new System.Windows.Forms.Padding(0, 0, 5, 0);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(92, 44);
             this.btnClose.TabIndex = 2;
@@ -216,6 +223,7 @@
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.imgCombineResult);
             this.panel1.Controls.Add(this.noteLbl);
