@@ -118,6 +118,7 @@ namespace ImageCombiner
                 clearRightBtn.Visible = false;
                 rightImgFilePath = "";
             }
+            ToggleImageSwapButton();
         }
 
         private void SelectImageWithFileDialog(object sender, EventArgs e)
@@ -185,6 +186,7 @@ namespace ImageCombiner
                     rightImgFilePath = filepath;
 
                 ToggleImageClearButton((PictureBox)sender);
+                ToggleImageSwapButton();
             }
             catch (Exception e)
             {
@@ -194,7 +196,7 @@ namespace ImageCombiner
 
         private void DragEnterEffects(object sender, DragEventArgs e)
         {
-            if (e.Data is not null && e.Data.GetDataPresent(DataFormats.FileDrop))
+            if (e.Data is not null && (e.Data.GetDataPresent(DataFormats.FileDrop) || e.Data.GetDataPresent(DataFormats.Bitmap) || e.Data.GetDataPresent(DataFormats.StringFormat)))
             {
                 e.Effect = DragDropEffects.Copy;
             }
@@ -204,22 +206,23 @@ namespace ImageCombiner
             }
         }
 
-        // TODO: Allow drag/drop between PBs to swap images
-
         private void DragDropLoad(object sender, DragEventArgs e)
         {
-            if (e.Data is not null)
+			if (e.Data is not null)
             {
                 string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-                if (filenames.Length < 1) return;
+                if (filenames.Length < 1) {
+					MessageBox.Show("Please drop a valid image onto the box.");
+                    return;
+                }
                 // There should only be one file, but if more were dropped, choose first one
-                leftImgFilePath = filenames[0];
+                //leftImgFilePath = filenames[0];
                 // Check the extension
                 string[] exts = new[] { ".JPG", ".PNG", ".BMP", ".GIF" };
 
                 foreach (string ext in exts)
                 {
-                    if (Path.GetExtension(leftImgFilePath).ToUpper().Equals(ext))
+                    if (Path.GetExtension(filenames[0]).ToUpper().Equals(ext))
                     {
                         try
                         {
@@ -234,5 +237,32 @@ namespace ImageCombiner
                 }
             }
         }
-    }
+
+        private void ToggleImageSwapButton()
+		{
+            if (leftImgFilePath == "" || rightImgFilePath == "")
+			{
+                btnSwapImages.Visible = false;
+                btnSwapImages.Enabled = false;
+			}
+            else
+			{
+                btnSwapImages.Visible = true;
+                btnSwapImages.Enabled = true;
+			}
+		}
+
+
+		private void btnSwapImages_Click(object sender, EventArgs e)
+		{
+            // Swap left and right images
+            var temp = leftImg.Image;
+            leftImg.Image = rightImg.Image;
+            rightImg.Image = temp;
+
+            string tempPath = leftImgFilePath;
+            leftImgFilePath = rightImgFilePath;
+            rightImgFilePath = tempPath;
+		}
+	}
 }
