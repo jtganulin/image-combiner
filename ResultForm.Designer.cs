@@ -20,7 +20,7 @@
             base.Dispose(disposing);
         }
 
-        // TODO: Need noteLbl to appear on both orientation layouts
+//////        // TODO: Need noteLbl to appear on both orientation layouts
 
         #region Windows Form Designer generated code
 
@@ -154,7 +154,7 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.noteLbl = new System.Windows.Forms.Label();
+//////            //this.noteLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.imgCombineResult)).BeginInit();
             this.flowLayoutPanel1.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -226,7 +226,7 @@
             this.panel1.BackColor = System.Drawing.Color.White;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.imgCombineResult);
-            this.panel1.Controls.Add(this.noteLbl);
+//////            //this.panel1.Controls.Add(this.noteLbl);
             this.panel1.Controls.Add(this.flowLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -234,15 +234,14 @@
             this.panel1.Size = new System.Drawing.Size(614, 672);
             this.panel1.TabIndex = 1;
             // 
-            // noteLbl
+//////            // noteLbl
             // 
-            this.noteLbl.AutoSize = true;
-            this.noteLbl.Location = new System.Drawing.Point(53, 623);
-            this.noteLbl.Name = "noteLbl";
-            this.noteLbl.Size = new System.Drawing.Size(279, 30);
-            this.noteLbl.TabIndex = 3;
-            this.noteLbl.Text = "Note: The image you see here is only a preview, and\r\nmay have different dimension" +
-    "s once you save it.";
+//////            this.noteLbl.AutoSize = true;
+//////            this.noteLbl.Location = new System.Drawing.Point(53, 623);
+////////            this.noteLbl.Name = "noteLbl";
+//////            this.noteLbl.Size = new System.Drawing.Size(279, 30);
+////            this.noteLbl.TabIndex = 3;
+////            this.noteLbl.Text = "Note: The image you see here is only a preview, and\r\nmay have different dimension's once you save it.";
             // 
             // ResultForm
             // 
@@ -272,6 +271,6 @@
         private Label label1;
         private FlowLayoutPanel flowLayoutPanel1;
         private Panel panel1;
-        private Label noteLbl;
+//////        private Label noteLbl;
     }
 }
