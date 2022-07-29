@@ -99,6 +99,7 @@
 			this.clearLeftBtn.Name = "clearLeftBtn";
 			this.clearLeftBtn.Size = new System.Drawing.Size(107, 38);
 			this.clearLeftBtn.TabIndex = 3;
+			this.clearLeftBtn.TabStop = false;
 			this.clearLeftBtn.Tag = "clearLeftBtn";
 			this.clearLeftBtn.Text = "Clear";
 			this.clearLeftBtn.UseVisualStyleBackColor = true;
@@ -161,6 +162,7 @@
 			this.clearRightBtn.Name = "clearRightBtn";
 			this.clearRightBtn.Size = new System.Drawing.Size(107, 38);
 			this.clearRightBtn.TabIndex = 4;
+			this.clearRightBtn.TabStop = false;
 			this.clearRightBtn.Tag = "clearRightBtn";
 			this.clearRightBtn.Text = "Clear";
 			this.clearRightBtn.UseVisualStyleBackColor = true;
@@ -214,7 +216,6 @@
 			this.horizontalRadio.Name = "horizontalRadio";
 			this.horizontalRadio.Size = new System.Drawing.Size(119, 29);
 			this.horizontalRadio.TabIndex = 1;
-			this.horizontalRadio.TabStop = true;
 			this.horizontalRadio.Text = "Horizontal";
 			this.horizontalRadio.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			this.horizontalRadio.UseVisualStyleBackColor = true;
@@ -255,6 +256,7 @@
 			this.resetBtn.Name = "resetBtn";
 			this.resetBtn.Size = new System.Drawing.Size(107, 63);
 			this.resetBtn.TabIndex = 4;
+			this.resetBtn.TabStop = false;
 			this.resetBtn.Tag = "resetBtn";
 			this.resetBtn.Text = "Reset";
 			this.resetBtn.UseVisualStyleBackColor = true;
@@ -268,6 +270,7 @@
 			this.combineBtn.Name = "combineBtn";
 			this.combineBtn.Size = new System.Drawing.Size(107, 63);
 			this.combineBtn.TabIndex = 5;
+			this.combineBtn.TabStop = false;
 			this.combineBtn.Text = "Combine";
 			this.combineBtn.UseVisualStyleBackColor = true;
 			this.combineBtn.Click += new System.EventHandler(this.combineBtn_Click);
@@ -311,7 +314,6 @@
 			this.btnSwapImages.AutoSize = true;
 			this.btnSwapImages.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.btnSwapImages.Enabled = false;
-			this.btnSwapImages.Visible = false;
 			this.btnSwapImages.Location = new System.Drawing.Point(748, 5);
 			this.btnSwapImages.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.btnSwapImages.Name = "btnSwapImages";
@@ -321,6 +323,7 @@
 			this.btnSwapImages.Tag = "btnSwapImages";
 			this.btnSwapImages.Text = "Swap Images";
 			this.btnSwapImages.UseVisualStyleBackColor = true;
+			this.btnSwapImages.Visible = false;
 			this.btnSwapImages.Click += new System.EventHandler(this.btnSwapImages_Click);
 			// 
 			// aboutPanel
