@@ -3,7 +3,6 @@ namespace ImageCombiner
 
     // TODO: Add Documentation
     // TODO: Clean up variables, fields, and control IDs
-    // TODO: Ensure combination is complete before allowing save
 
     public partial class ImageCombiner : Form
     {
@@ -52,8 +51,7 @@ namespace ImageCombiner
 
         private void combineBtn_Click(object sender, EventArgs e)
         {
-            // Need to check if both images are populated and valid
-            if (string.IsNullOrEmpty(leftImgFilePath) || string.IsNullOrEmpty(rightImgFilePath))
+            if (string.IsNullOrEmpty(leftImgFilePath) || string.IsNullOrEmpty(rightImgFilePath) || !File.Exists(leftImgFilePath) || !File.Exists(rightImgFilePath))
             {
                 if (orientation == 'h')
                     MessageBox.Show("Please add both a left and right image.", "Missing an Image", MessageBoxButtons.OK);
@@ -68,7 +66,6 @@ namespace ImageCombiner
                 {
                     case DialogResult.Yes:
                         // User saved the image
-                        MessageBox.Show("Saving completed.");
                         resultForm.Close();
                         break;
                     case DialogResult.No:
