@@ -10,7 +10,7 @@
     <StartupObject>ImageCombiner.Program</StartupObject>
     <ApplicationIcon>ImageCombiner.ico</ApplicationIcon>
     <ErrorReport>none</ErrorReport>
-    <PackageIcon>ImageCombiner.png</PackageIcon>
+    <PackageIcon>ImageCombiner.jpg</PackageIcon>
     <NeutralLanguage>en-US</NeutralLanguage>
     <Authors>Jeffrey Ganulin</Authors>
     <Description>Combines two separate images into a vertical or horizontal composite.</Description>
@@ -20,14 +20,20 @@
     <IsPublishable>True</IsPublishable>
     <Product>Image Combiner</Product>
     <AssemblyName>Image Combiner</AssemblyName>
+    <ProduceReferenceAssembly>False</ProduceReferenceAssembly>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <AssemblyVersion>1.0.1.0</AssemblyVersion>
+    <FileVersion>1.0.1.0</FileVersion>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>portable</DebugType>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
     <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+    <DebugType>none</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -52,6 +58,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
