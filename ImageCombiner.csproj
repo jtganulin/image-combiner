@@ -17,7 +17,7 @@
     <PackageProjectUrl>https://github.com/jtganulin/image-combiner</PackageProjectUrl>
     <RepositoryUrl>https://github.com/jtganulin/image-combiner</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <IsPublishable>False</IsPublishable>
+    <IsPublishable>True</IsPublishable>
     <Product>Image Combiner</Product>
     <AssemblyName>Image Combiner</AssemblyName>
     <ProduceReferenceAssembly>False</ProduceReferenceAssembly>

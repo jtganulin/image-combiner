@@ -104,7 +104,7 @@ namespace ImageCombiner
 		// TODO: Would like to retain EXIF date information
 		private void CombineImage()
 		{
-			if ((string.IsNullOrEmpty(leftImagePath) || string.IsNullOrEmpty(rightImagePath) || Array.IndexOf(new[] { 'h', 'v' }, orientation) < 0) && (!File.Exists(leftImagePath) || !File.Exists(rightImagePath)))
+			if ((string.IsNullOrEmpty(leftImagePath) || string.IsNullOrEmpty(rightImagePath) || Array.IndexOf(new[] { 'h', 'v' }, orientation) < 0) || !File.Exists(leftImagePath) || !File.Exists(rightImagePath))
 			{
 				this.DialogResult = DialogResult.Abort;
 				return;
@@ -117,7 +117,6 @@ namespace ImageCombiner
 				using (rightImage = Image.FromFile(rightImagePath))
 				using (MagickImageCollection collection = new())
 				{
-					// TODO: Make sure both images exist
 					Image[] images = new[] { leftImage, rightImage };
 					foreach (Image img in images)
 					{
