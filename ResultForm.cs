@@ -15,7 +15,7 @@ namespace ImageCombiner
 			this.leftImagePath = leftImagePath ?? "";
 			this.rightImagePath = rightImagePath ?? "";
 			this.orientation = orientation;
-			this.resultImg = new MagickImage();
+			resultImg = new MagickImage();
 
 			if (orientation == 'h')
 				InitializeComponentHorizontal();
@@ -25,16 +25,15 @@ namespace ImageCombiner
 			try
 			{
 				imgCombineResult.Image = Properties.Resources.PleaseWait;
-				this.btnSave.Enabled = false;
+				Toggle_btnSave(false);
 				ThreadStart ts = (() => CombineImage());
-				ts += () =>
+				ts += delegate
 				{
-					// Show combined preview in result PictureBox
 					imgCombineResult.Image = Image.FromStream(new MemoryStream(resultImg.ToByteArray()));
-					this.btnSave.Enabled = true;
+					Toggle_btnSave(true);
 				};
-				Thread thread = new Thread(ts) { IsBackground = true };
-				thread.Start();
+				Thread t = new Thread(ts);
+				t.Start();
 			}
 			catch (Exception ex)
 			{
@@ -45,6 +44,22 @@ namespace ImageCombiner
 		~ResultForm()
 		{
 			this.Dispose(true);
+		}
+
+		private void Toggle_btnSave(bool enable)
+		{
+			if (this.btnSave.InvokeRequired)
+			{
+				Action safeToggle = delegate { Toggle_btnSave(true); };
+				this.btnSave.Invoke(safeToggle);
+			}
+			else
+			{
+				if (enable)
+					this.btnSave.Enabled = true;
+				else
+					this.btnSave.Enabled = false;
+			}
 		}
 
 		private void btnClose_Click(object sender, EventArgs e)
