@@ -1,8 +1,10 @@
 namespace ImageCombiner
 {
 
-   // TODO: Add Documentation
- 
+    // TODO: Add Documentation
+    // TODO: Clean up variables, fields, and control IDs
+    // TODO: Ensure combination is complete before allowing save
+
     public partial class ImageCombiner : Form
     {
         private string leftImgFilePath = "";
@@ -12,6 +14,11 @@ namespace ImageCombiner
         public ImageCombiner()
         {
             InitializeComponent();
+        }
+
+        ~ImageCombiner()
+        {
+            this.Dispose(true);
         }
 
         private void horizontalRadio_CheckedChanged(object sender, EventArgs e)
@@ -57,23 +64,22 @@ namespace ImageCombiner
             {
                 ResultForm resultForm = new ResultForm(leftImgFilePath, rightImgFilePath, orientation);
                 DialogResult result = resultForm.ShowDialog(this);
-                //switch (result)
-                //{
-                //    case DialogResult.Yes:
-                //        // User saved the image
-                //        MessageBox.Show("Operation succeeded.");
-                //        resultForm.Close();
-                //        break;
-                //    case DialogResult.No:
-                //        // User closed the dialog without saving
-                //        MessageBox.Show("Operation canceled.");
-                //        resultForm.Close();
-                //        break;
-                //    case DialogResult.Abort:
-                //        // There was an error with a file path or orientation flag
-                //        MessageBox.Show(new ArgumentException("There was an error combinging the images.\nPlease try again,").Message.ToString());
-                //        break;
-                //}
+                switch (result)
+                {
+                    case DialogResult.Yes:
+                        // User saved the image
+                        MessageBox.Show("Saving completed.");
+                        resultForm.Close();
+                        break;
+                    case DialogResult.No:
+                        // User closed the dialog without saving
+                        resultForm.Close();
+                        break;
+                    case DialogResult.Abort:
+                        // There was an error with a file path or orientation flag
+                        MessageBox.Show(new ArgumentException("There was an error combinging the images.\nPlease ensure both images still exist and try again.").Message.ToString());
+                        break;
+                }
             }
         }
 
@@ -144,10 +150,14 @@ namespace ImageCombiner
         {
             try
             {
-                Image image = Image.FromFile(filepath);
+                Image image;
+                using (var bmpTemp = new Bitmap(filepath))
+                {
+                    image = new Bitmap(bmpTemp);
+                }
 
                 // Get the EXIF info from the image, check its orientation, and display it properly in the PictureBox
-                #pragma warning disable CS8602 // Dereference of a possibly null reference.
+#pragma warning disable CS8602 // Dereference of a possibly null reference.
                 if (Array.IndexOf(image.PropertyIdList, 274) > -1 && image.GetPropertyItem(274).Value[0] >= 1 && image.GetPropertyItem(274).Value[0] <= 8)
                 {
                     switch (image.GetPropertyItem(274).Value[0])
@@ -176,7 +186,7 @@ namespace ImageCombiner
                     }
                     image.RemovePropertyItem(274);
                 }
-                #pragma warning restore CS8602 // Dereference of a possibly null reference.
+#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
                 ((PictureBox)sender).Image = image;
 
@@ -208,17 +218,18 @@ namespace ImageCombiner
 
         private void DragDropLoad(object sender, DragEventArgs e)
         {
-			if (e.Data is not null)
+            if (e.Data is not null)
             {
                 string[] filenames = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-                if (filenames.Length < 1) {
-					MessageBox.Show("Please drop a valid image onto the box.");
+                if (filenames.Length < 1)
+                {
+                    MessageBox.Show("Please drop a valid image onto the box.");
                     return;
                 }
                 // There should only be one file, but if more were dropped, choose first one
-                //leftImgFilePath = filenames[0];
+                // leftImgFilePath = filenames[0];
                 // Check the extension
-                string[] exts = new[] { ".JPG", ".PNG", ".BMP", ".GIF" };
+                string[] exts = new[] { ".JPG", ".PNG", ".BMP" };
 
                 foreach (string ext in exts)
                 {
@@ -239,22 +250,22 @@ namespace ImageCombiner
         }
 
         private void ToggleImageSwapButton()
-		{
+        {
             if (leftImgFilePath == "" || rightImgFilePath == "")
-			{
+            {
                 btnSwapImages.Visible = false;
                 btnSwapImages.Enabled = false;
-			}
+            }
             else
-			{
+            {
                 btnSwapImages.Visible = true;
                 btnSwapImages.Enabled = true;
-			}
-		}
+            }
+        }
 
 
-		private void btnSwapImages_Click(object sender, EventArgs e)
-		{
+        private void btnSwapImages_Click(object sender, EventArgs e)
+        {
             // Swap left and right images
             var temp = leftImg.Image;
             leftImg.Image = rightImg.Image;
@@ -263,6 +274,6 @@ namespace ImageCombiner
             string tempPath = leftImgFilePath;
             leftImgFilePath = rightImgFilePath;
             rightImgFilePath = tempPath;
-		}
-	}
+        }
+    }
 }
