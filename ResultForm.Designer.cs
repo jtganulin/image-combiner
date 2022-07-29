@@ -20,8 +20,6 @@
             base.Dispose(disposing);
         }
 
-//////        // TODO: Need noteLbl to appear on both orientation layouts
-
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -224,6 +222,7 @@
 			this.btnClose.Name = "btnClose";
 			this.btnClose.Size = new System.Drawing.Size(131, 73);
 			this.btnClose.TabIndex = 2;
+			this.btnClose.TabStop = false;
 			this.btnClose.Text = "Close";
 			this.btnClose.UseVisualStyleBackColor = true;
 			this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
