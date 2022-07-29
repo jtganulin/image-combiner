@@ -82,7 +82,7 @@ namespace ImageCombiner
 
         private void ToggleImageClearButton(PictureBox pb)
         {
-            if (pb.Tag as string == "leftImg")
+			if (pb.Tag as string == "leftImg")
             {
                 if (this.clearLeftBtn.Visible)
                     this.clearLeftBtn.Visible = false;
@@ -128,13 +128,14 @@ namespace ImageCombiner
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Image Files ( *.JPG; *.GIF; *.PNG; *.BMP;)|*.JPG; *.GIF; *.PNG; *.BMP";
+                openFileDialog.Filter = "Image Files ( *.JPG; *.PNG; *.BMP;)|*.JPG; *.PNG; *.BMP";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
                         LoadImageAndFixOrientation(sender, openFileDialog.FileName);
-                    }
+						ToggleImageClearButton((PictureBox)sender);
+					}
                     catch (IOException ex)
                     {
                         MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
@@ -192,7 +193,6 @@ namespace ImageCombiner
                 else
                     rightImgFilePath = filepath;
 
-                ToggleImageClearButton((PictureBox)sender);
                 ToggleImageSwapButton();
             }
             catch (Exception e)
@@ -236,7 +236,7 @@ namespace ImageCombiner
                         {
                             LoadImageAndFixOrientation(sender, filenames[0]);
                             ToggleImageClearButton((PictureBox)sender);
-                        }
+						}
                         catch (IOException ex)
                         {
                             MessageBox.Show("There was an error:\n" + ex.Message + "\n\nPlease try again or use a different image.", "Loading Error", MessageBoxButtons.OK);
