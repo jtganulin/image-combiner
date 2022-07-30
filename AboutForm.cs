@@ -1,39 +1,38 @@
 ﻿using System.Diagnostics;
 
-namespace ImageCombiner
+namespace ImageCombiner;
+
+public partial class AboutForm : Form
 {
-    public partial class AboutForm : Form
+    public AboutForm()
     {
-        public AboutForm()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        Process.Start(new ProcessStartInfo 
         {
-            Process.Start(new ProcessStartInfo 
-            {
-                FileName = "https://github.com/dlemstra/Magick.NET/",
-                UseShellExecute = true
-            });
-        }
+            FileName = "https://github.com/dlemstra/Magick.NET/",
+            UseShellExecute = true
+        });
+    }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        Process.Start(new ProcessStartInfo
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "mailto:jtganulin@jgproductions.x10.bz",
-                UseShellExecute = true
-            });
-        }
+            FileName = "mailto:jtganulin@jgproductions.x10.bz",
+            UseShellExecute = true
+        });
+    }
 
-        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+    {
+        Process.Start(new ProcessStartInfo
         {
-            Process.Start(new ProcessStartInfo
-            {
-                FileName = "https://github.com/jtganulin/image-combiner",
-                UseShellExecute = true
-            });
-        }
+            FileName = "https://github.com/jtganulin/image-combiner",
+            UseShellExecute = true
+        });
     }
 }

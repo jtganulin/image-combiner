@@ -31,18 +31,18 @@
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ImageCombiner));
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.leftPanel = new System.Windows.Forms.Panel();
-			this.clearLeftBtn = new System.Windows.Forms.Button();
-			this.leftImg = new System.Windows.Forms.PictureBox();
+			this.btnClearLeftImage = new System.Windows.Forms.Button();
+			this.pbLeftImage = new System.Windows.Forms.PictureBox();
 			this.img1Lbl = new System.Windows.Forms.Label();
 			this.rightPanel = new System.Windows.Forms.Panel();
-			this.clearRightBtn = new System.Windows.Forms.Button();
-			this.rightImg = new System.Windows.Forms.PictureBox();
+			this.btnClearRightImage = new System.Windows.Forms.Button();
+			this.pbRightImage = new System.Windows.Forms.PictureBox();
 			this.img2Lbl = new System.Windows.Forms.Label();
 			this.horizontalRadio = new System.Windows.Forms.RadioButton();
 			this.verticalRadio = new System.Windows.Forms.RadioButton();
 			this.label1 = new System.Windows.Forms.Label();
-			this.resetBtn = new System.Windows.Forms.Button();
-			this.combineBtn = new System.Windows.Forms.Button();
+			this.btnReset = new System.Windows.Forms.Button();
+			this.btnCombine = new System.Windows.Forms.Button();
 			this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
 			this.btnSwapImages = new System.Windows.Forms.Button();
@@ -50,9 +50,9 @@
 			this.btnAbout = new System.Windows.Forms.Button();
 			this.tableLayoutPanel1.SuspendLayout();
 			this.leftPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.leftImg)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pbLeftImage)).BeginInit();
 			this.rightPanel.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.rightImg)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pbRightImage)).BeginInit();
 			this.tableLayoutPanel2.SuspendLayout();
 			this.flowLayoutPanel1.SuspendLayout();
 			this.aboutPanel.SuspendLayout();
@@ -83,8 +83,8 @@
 			this.leftPanel.AllowDrop = true;
 			this.leftPanel.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.leftPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.leftPanel.Controls.Add(this.clearLeftBtn);
-			this.leftPanel.Controls.Add(this.leftImg);
+			this.leftPanel.Controls.Add(this.btnClearLeftImage);
+			this.leftPanel.Controls.Add(this.pbLeftImage);
 			this.leftPanel.Controls.Add(this.img1Lbl);
 			this.leftPanel.Location = new System.Drawing.Point(5, 6);
 			this.leftPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -92,42 +92,42 @@
 			this.leftPanel.Size = new System.Drawing.Size(542, 552);
 			this.leftPanel.TabIndex = 0;
 			// 
-			// clearLeftBtn
+			// btnClearLeftImage
 			// 
-			this.clearLeftBtn.Location = new System.Drawing.Point(414, 492);
-			this.clearLeftBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.clearLeftBtn.Name = "clearLeftBtn";
-			this.clearLeftBtn.Size = new System.Drawing.Size(107, 38);
-			this.clearLeftBtn.TabIndex = 3;
-			this.clearLeftBtn.TabStop = false;
-			this.clearLeftBtn.Tag = "clearLeftBtn";
-			this.clearLeftBtn.Text = "Clear";
-			this.clearLeftBtn.UseVisualStyleBackColor = true;
-			this.clearLeftBtn.Visible = false;
-			this.clearLeftBtn.Click += new System.EventHandler(this.ClearImage);
+			this.btnClearLeftImage.Location = new System.Drawing.Point(414, 492);
+			this.btnClearLeftImage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.btnClearLeftImage.Name = "btnClearLeftImage";
+			this.btnClearLeftImage.Size = new System.Drawing.Size(107, 38);
+			this.btnClearLeftImage.TabIndex = 3;
+			this.btnClearLeftImage.TabStop = false;
+			this.btnClearLeftImage.Tag = "btnClearLeftImage";
+			this.btnClearLeftImage.Text = "Clear";
+			this.btnClearLeftImage.UseVisualStyleBackColor = true;
+			this.btnClearLeftImage.Visible = false;
+			this.btnClearLeftImage.Click += new System.EventHandler(this.ClearImage);
 			// 
-			// leftImg
+			// pbLeftImage
 			// 
-			this.leftImg.AllowDrop = true;
-			this.leftImg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.pbLeftImage.AllowDrop = true;
+			this.pbLeftImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.leftImg.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.leftImg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.leftImg.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.leftImg.Image = global::ImageCombiner.Properties.Resources.DefaultImg;
-			this.leftImg.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
-			this.leftImg.Location = new System.Drawing.Point(19, 68);
-			this.leftImg.Margin = new System.Windows.Forms.Padding(0);
-			this.leftImg.Name = "leftImg";
-			this.leftImg.Size = new System.Drawing.Size(501, 411);
-			this.leftImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.leftImg.TabIndex = 2;
-			this.leftImg.TabStop = false;
-			this.leftImg.Tag = "leftImg";
-			this.leftImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropLoad);
-			this.leftImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEffects);
-			this.leftImg.DoubleClick += new System.EventHandler(this.SelectImageWithFileDialog);
+			this.pbLeftImage.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.pbLeftImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.pbLeftImage.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.pbLeftImage.Image = global::ImageCombiner.Properties.Resources.DefaultImg;
+			this.pbLeftImage.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
+			this.pbLeftImage.Location = new System.Drawing.Point(19, 68);
+			this.pbLeftImage.Margin = new System.Windows.Forms.Padding(0);
+			this.pbLeftImage.Name = "pbLeftImage";
+			this.pbLeftImage.Size = new System.Drawing.Size(501, 411);
+			this.pbLeftImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pbLeftImage.TabIndex = 2;
+			this.pbLeftImage.TabStop = false;
+			this.pbLeftImage.Tag = "pbLeftImage";
+			this.pbLeftImage.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropLoad);
+			this.pbLeftImage.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEffects);
+			this.pbLeftImage.DoubleClick += new System.EventHandler(this.SelectImageWithFileDialog);
 			// 
 			// img1Lbl
 			// 
@@ -146,8 +146,8 @@
 			this.rightPanel.AllowDrop = true;
 			this.rightPanel.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.rightPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.rightPanel.Controls.Add(this.clearRightBtn);
-			this.rightPanel.Controls.Add(this.rightImg);
+			this.rightPanel.Controls.Add(this.btnClearRightImage);
+			this.rightPanel.Controls.Add(this.pbRightImage);
 			this.rightPanel.Controls.Add(this.img2Lbl);
 			this.rightPanel.Location = new System.Drawing.Point(557, 6);
 			this.rightPanel.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -155,42 +155,42 @@
 			this.rightPanel.Size = new System.Drawing.Size(543, 552);
 			this.rightPanel.TabIndex = 1;
 			// 
-			// clearRightBtn
+			// btnClearRightImage
 			// 
-			this.clearRightBtn.Location = new System.Drawing.Point(416, 493);
-			this.clearRightBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.clearRightBtn.Name = "clearRightBtn";
-			this.clearRightBtn.Size = new System.Drawing.Size(107, 38);
-			this.clearRightBtn.TabIndex = 4;
-			this.clearRightBtn.TabStop = false;
-			this.clearRightBtn.Tag = "clearRightBtn";
-			this.clearRightBtn.Text = "Clear";
-			this.clearRightBtn.UseVisualStyleBackColor = true;
-			this.clearRightBtn.Visible = false;
-			this.clearRightBtn.Click += new System.EventHandler(this.ClearImage);
+			this.btnClearRightImage.Location = new System.Drawing.Point(416, 493);
+			this.btnClearRightImage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.btnClearRightImage.Name = "btnClearRightImage";
+			this.btnClearRightImage.Size = new System.Drawing.Size(107, 38);
+			this.btnClearRightImage.TabIndex = 4;
+			this.btnClearRightImage.TabStop = false;
+			this.btnClearRightImage.Tag = "btnClearRightImage";
+			this.btnClearRightImage.Text = "Clear";
+			this.btnClearRightImage.UseVisualStyleBackColor = true;
+			this.btnClearRightImage.Visible = false;
+			this.btnClearRightImage.Click += new System.EventHandler(this.ClearImage);
 			// 
-			// rightImg
+			// pbRightImage
 			// 
-			this.rightImg.AllowDrop = true;
-			this.rightImg.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.pbRightImage.AllowDrop = true;
+			this.pbRightImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.rightImg.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.rightImg.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-			this.rightImg.Cursor = System.Windows.Forms.Cursors.Hand;
-			this.rightImg.Image = global::ImageCombiner.Properties.Resources.DefaultImg;
-			this.rightImg.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
-			this.rightImg.Location = new System.Drawing.Point(20, 68);
-			this.rightImg.Margin = new System.Windows.Forms.Padding(0);
-			this.rightImg.Name = "rightImg";
-			this.rightImg.Size = new System.Drawing.Size(501, 411);
-			this.rightImg.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-			this.rightImg.TabIndex = 3;
-			this.rightImg.TabStop = false;
-			this.rightImg.Tag = "rightImg";
-			this.rightImg.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropLoad);
-			this.rightImg.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEffects);
-			this.rightImg.DoubleClick += new System.EventHandler(this.SelectImageWithFileDialog);
+			this.pbRightImage.BackColor = System.Drawing.SystemColors.ControlDark;
+			this.pbRightImage.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+			this.pbRightImage.Cursor = System.Windows.Forms.Cursors.Hand;
+			this.pbRightImage.Image = global::ImageCombiner.Properties.Resources.DefaultImg;
+			this.pbRightImage.InitialImage = global::ImageCombiner.Properties.Resources.LoadingImg;
+			this.pbRightImage.Location = new System.Drawing.Point(20, 68);
+			this.pbRightImage.Margin = new System.Windows.Forms.Padding(0);
+			this.pbRightImage.Name = "pbRightImage";
+			this.pbRightImage.Size = new System.Drawing.Size(501, 411);
+			this.pbRightImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pbRightImage.TabIndex = 3;
+			this.pbRightImage.TabStop = false;
+			this.pbRightImage.Tag = "pbRightImage";
+			this.pbRightImage.DragDrop += new System.Windows.Forms.DragEventHandler(this.DragDropLoad);
+			this.pbRightImage.DragEnter += new System.Windows.Forms.DragEventHandler(this.DragEnterEffects);
+			this.pbRightImage.DoubleClick += new System.EventHandler(this.SelectImageWithFileDialog);
 			// 
 			// img2Lbl
 			// 
@@ -248,32 +248,32 @@
 			this.label1.Text = "Combine Orientation:";
 			this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
 			// 
-			// resetBtn
+			// btnReset
 			// 
-			this.resetBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.resetBtn.Location = new System.Drawing.Point(884, 5);
-			this.resetBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.resetBtn.Name = "resetBtn";
-			this.resetBtn.Size = new System.Drawing.Size(107, 63);
-			this.resetBtn.TabIndex = 4;
-			this.resetBtn.TabStop = false;
-			this.resetBtn.Tag = "resetBtn";
-			this.resetBtn.Text = "Reset";
-			this.resetBtn.UseVisualStyleBackColor = true;
-			this.resetBtn.Click += new System.EventHandler(this.resetBtn_Click);
+			this.btnReset.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnReset.Location = new System.Drawing.Point(884, 5);
+			this.btnReset.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.btnReset.Name = "btnReset";
+			this.btnReset.Size = new System.Drawing.Size(107, 63);
+			this.btnReset.TabIndex = 4;
+			this.btnReset.TabStop = false;
+			this.btnReset.Tag = "btnReset";
+			this.btnReset.Text = "Reset";
+			this.btnReset.UseVisualStyleBackColor = true;
+			this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
 			// 
-			// combineBtn
+			// btnCombine
 			// 
-			this.combineBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.combineBtn.Location = new System.Drawing.Point(999, 5);
-			this.combineBtn.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
-			this.combineBtn.Name = "combineBtn";
-			this.combineBtn.Size = new System.Drawing.Size(107, 63);
-			this.combineBtn.TabIndex = 5;
-			this.combineBtn.TabStop = false;
-			this.combineBtn.Text = "Combine";
-			this.combineBtn.UseVisualStyleBackColor = true;
-			this.combineBtn.Click += new System.EventHandler(this.combineBtn_Click);
+			this.btnCombine.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.btnCombine.Location = new System.Drawing.Point(999, 5);
+			this.btnCombine.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+			this.btnCombine.Name = "btnCombine";
+			this.btnCombine.Size = new System.Drawing.Size(107, 63);
+			this.btnCombine.TabIndex = 5;
+			this.btnCombine.TabStop = false;
+			this.btnCombine.Text = "Combine";
+			this.btnCombine.UseVisualStyleBackColor = true;
+			this.btnCombine.Click += new System.EventHandler(this.btnCombine_Click);
 			// 
 			// tableLayoutPanel2
 			// 
@@ -283,8 +283,8 @@
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.tableLayoutPanel2.Controls.Add(this.flowLayoutPanel1, 0, 0);
-			this.tableLayoutPanel2.Controls.Add(this.combineBtn, 3, 0);
-			this.tableLayoutPanel2.Controls.Add(this.resetBtn, 2, 0);
+			this.tableLayoutPanel2.Controls.Add(this.btnCombine, 3, 0);
+			this.tableLayoutPanel2.Controls.Add(this.btnReset, 2, 0);
 			this.tableLayoutPanel2.Controls.Add(this.btnSwapImages, 1, 0);
 			this.tableLayoutPanel2.Location = new System.Drawing.Point(17, 8);
 			this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
@@ -373,10 +373,10 @@
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.leftPanel.ResumeLayout(false);
 			this.leftPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.leftImg)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pbLeftImage)).EndInit();
 			this.rightPanel.ResumeLayout(false);
 			this.rightPanel.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.rightImg)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pbRightImage)).EndInit();
 			this.tableLayoutPanel2.ResumeLayout(false);
 			this.tableLayoutPanel2.PerformLayout();
 			this.flowLayoutPanel1.ResumeLayout(false);
@@ -394,16 +394,16 @@
         private RadioButton horizontalRadio;
         private RadioButton verticalRadio;
         private Label label1;
-        private Button resetBtn;
-        private Button combineBtn;
+        private Button btnReset;
+        private Button btnCombine;
         private Panel leftPanel;
         private Label img1Lbl;
         private Panel rightPanel;
         private Label img2Lbl;
-        private Button clearLeftBtn;
-        private PictureBox leftImg;
-        private Button clearRightBtn;
-        private PictureBox rightImg;
+        private Button btnClearLeftImage;
+        private PictureBox pbLeftImage;
+        private Button btnClearRightImage;
+        private PictureBox pbRightImage;
         private TableLayoutPanel tableLayoutPanel2;
         private FlowLayoutPanel flowLayoutPanel1;
         private FlowLayoutPanel aboutPanel;

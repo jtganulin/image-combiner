@@ -2,172 +2,127 @@
 
 using ImageMagick;
 
-namespace ImageCombiner
+namespace ImageCombiner;
+
+public partial class ResultForm : Form
 {
-	public partial class ResultForm : Form
+	private readonly Image _leftImage, _rightImage;
+	private readonly char _orientation;
+	private MagickImage _resultImg;
+
+	public ResultForm(Image leftImage, Image rightImage, char orientation)
 	{
-		private string leftImagePath, rightImagePath;
-		private char orientation;
-		private MagickImage resultImg;
+		_leftImage = leftImage;
+		_rightImage = rightImage;
+		_orientation = orientation;
+		_resultImg = new MagickImage();
 
-		public ResultForm(string? leftImagePath, string? rightImagePath, char orientation)
+		if (orientation == 'h')
+			InitializeComponentHorizontal();
+		else
+			InitializeComponent();
+
+		try
 		{
-			this.leftImagePath = leftImagePath ?? "";
-			this.rightImagePath = rightImagePath ?? "";
-			this.orientation = orientation;
-			resultImg = new MagickImage();
+			imgCombineResult.Image = Properties.Resources.PleaseWait;
+			Toggle_btnSave(false);
+			ThreadStart ts = CombineImage;
+			ts += delegate
+			{
+				imgCombineResult.Image = _resultImg.ToBitmap();
+				Toggle_btnSave(true);
+			};
+			Thread t = new Thread(ts);
+			t.Start();
+		}
+		catch (Exception ex)
+		{
+			MessageBox.Show(ex.Message);
+		}
+	}
 
-			if (orientation == 'h')
-				InitializeComponentHorizontal();
+	~ResultForm()
+	{
+		if (_resultImg is not null)
+			_resultImg.Dispose();
+		Dispose();
+	}
+
+	private void Toggle_btnSave(bool enable)
+	{
+		if (btnSave.InvokeRequired)
+		{
+			void SafeToggle()
+			{
+				Toggle_btnSave(true);
+			}
+
+			btnSave.Invoke((Action)SafeToggle);
+		}
+		else
+			btnSave.Enabled = enable;
+	}
+
+	private void btnClose_Click(object sender, EventArgs e)
+	{
+		if (MessageBox.Show("Are you sure you want to discard your combined image?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+		{
+			if (_resultImg is not null)
+				_resultImg.Dispose();
+			DialogResult = DialogResult.No;
+		}
+	}
+
+	private void btnSave_Click(object sender, EventArgs e)
+	{
+		using SaveFileDialog saveFileDialog = new();
+		saveFileDialog.Filter = "Image Files ( *.JPG; *.PNG; *.BMP;)|*.JPG; *.PNG; *.BMP";
+		saveFileDialog.Title = "Save Combined Image...";
+		saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+		saveFileDialog.FileName = "Result.jpg";
+		saveFileDialog.RestoreDirectory = true;
+		if (saveFileDialog.ShowDialog() != DialogResult.OK) return;
+		try
+		{
+			using FileStream fs = new(saveFileDialog.FileName, FileMode.Create);
+			// TODO: Right now saving as JPEG, but would like to get the format from the provided images
+			//       or give an option.
+			Image image = _resultImg.ToBitmap();
+			// Get the date taken of the right/top image and give it to the result image
+			if (Array.IndexOf(_rightImage.PropertyIdList, 36867) > -1 && _rightImage.GetPropertyItem(36867) is not null)
+			{
+				var date = _rightImage.GetPropertyItem(36867);
+				if (date != null) image.SetPropertyItem(date);
+			}
+			image.Save(fs, ImageFormat.Jpeg);
+			image.Dispose(); _resultImg.Dispose();
+			DialogResult = DialogResult.Yes;
+		}
+		catch (IOException)
+		{
+			MessageBox.Show("There was an error saving the image. \n\nPlease try again or select a new file name or save location.", "Saving Error", MessageBoxButtons.OK);
+		}
+	}
+
+	private void CombineImage()
+	{
+		try
+		{
+			using MagickImageCollection collection = new();
+			collection.Add(new MagickImage(new MagickFactory().Image.Create(new Bitmap(_leftImage))));
+			collection.Add(new MagickImage(new MagickFactory().Image.Create(new Bitmap(_rightImage))));
+			if (_orientation == 'h')
+				_resultImg = (MagickImage)collection.AppendHorizontally();
 			else
-				InitializeComponent();
-
-			try
 			{
-				imgCombineResult.Image = Properties.Resources.PleaseWait;
-				Toggle_btnSave(false);
-				ThreadStart ts = (() => CombineImage());
-				ts += delegate
-				{
-					imgCombineResult.Image = Image.FromStream(new MemoryStream(resultImg.ToByteArray()));
-					Toggle_btnSave(true);
-				};
-				Thread t = new Thread(ts);
-				t.Start();
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message);
+				// Vertical append composes the images opposite of desired order
+				collection.Reverse();
+				_resultImg = (MagickImage)collection.AppendVertically();
 			}
 		}
-
-		~ResultForm()
+		catch (Exception)
 		{
-			this.Dispose(true);
-		}
-
-		private void Toggle_btnSave(bool enable)
-		{
-			if (this.btnSave.InvokeRequired)
-			{
-				Action safeToggle = delegate { Toggle_btnSave(true); };
-				this.btnSave.Invoke(safeToggle);
-			}
-			else
-			{
-				if (enable)
-					this.btnSave.Enabled = true;
-				else
-					this.btnSave.Enabled = false;
-			}
-		}
-
-		private void btnClose_Click(object sender, EventArgs e)
-		{
-			if (MessageBox.Show("Are you sure you want to discard your combined image?", "Warning", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-			{
-				this.DialogResult = DialogResult.No;
-			}
-		}
-
-		private void btnSave_Click(object sender, EventArgs e)
-		{
-			using (SaveFileDialog saveFileDialog = new())
-			{
-				saveFileDialog.Filter = "Image Files ( *.JPG; *.GIF; *.PNG; *.BMP;)|*.JPG; *.GIF; *.PNG; *.BMP";
-				saveFileDialog.InitialDirectory = new FileInfo(rightImagePath).DirectoryName;
-				saveFileDialog.Title = "Save Combined Image...";
-				saveFileDialog.FileName = "Result.jpg";
-				saveFileDialog.RestoreDirectory = true;
-				if (saveFileDialog.ShowDialog() == DialogResult.OK)
-				{
-					try
-					{
-						using (FileStream fs = new(saveFileDialog.FileName, FileMode.Create))
-						{
-							// TODO: Right now saving as JPEG, but would like to get the format from the provided images
-							//       or give an option.
-							Image image = resultImg.ToBitmap();
-							image.Save(fs, ImageFormat.Jpeg);
-							image.Dispose(); fs.FlushAsync();
-							this.DialogResult = DialogResult.Yes;
-						}
-					}
-					catch (IOException)
-					{
-						MessageBox.Show("There was an error saving the image. \n\nPlease try again or select a new file name or save location.", "Saving Error", MessageBoxButtons.OK);
-					}
-				}
-			}
-		}
-
-		// TODO: Would like to retain EXIF date information
-		private void CombineImage()
-		{
-			if ((string.IsNullOrEmpty(leftImagePath) || string.IsNullOrEmpty(rightImagePath) || Array.IndexOf(new[] { 'h', 'v' }, orientation) < 0) || !File.Exists(leftImagePath) || !File.Exists(rightImagePath))
-			{
-				this.DialogResult = DialogResult.Abort;
-				return;
-			}
-
-			Image leftImage, rightImage;
-			try
-			{
-				using (leftImage = Image.FromFile(leftImagePath))
-				using (rightImage = Image.FromFile(rightImagePath))
-				using (MagickImageCollection collection = new())
-				{
-					Image[] images = new[] { leftImage, rightImage };
-					foreach (Image img in images)
-					{
-#pragma warning disable CS8602 // Dereference of a possibly null reference. ...Value[0] won't be accessed if it's not in the property list
-						if (Array.IndexOf(img.PropertyIdList, 274) > -1 && (img.GetPropertyItem(274).Value[0] >= 1 && img.GetPropertyItem(274).Value[0] <= 8))
-						{
-							switch (img.GetPropertyItem(274).Value[0])
-							{
-								case 2:
-									img.RotateFlip(RotateFlipType.RotateNoneFlipX);
-									break;
-								case 3:
-									img.RotateFlip(RotateFlipType.Rotate180FlipNone);
-									break;
-								case 4:
-									img.RotateFlip(RotateFlipType.Rotate180FlipX);
-									break;
-								case 5:
-									img.RotateFlip(RotateFlipType.Rotate90FlipX);
-									break;
-								case 6:
-									img.RotateFlip(RotateFlipType.Rotate90FlipNone);
-									break;
-								case 7:
-									img.RotateFlip(RotateFlipType.Rotate270FlipX);
-									break;
-								case 8:
-									img.RotateFlip(RotateFlipType.Rotate270FlipNone);
-									break;
-							}
-							img.RemovePropertyItem(274);
-						}
-#pragma warning restore CS8602 // Dereference of a possibly null 
-						collection.Add(new MagickImage(new MagickFactory().Image.Create(new Bitmap(img))));
-					}
-
-					if (orientation == 'h')
-						resultImg = (MagickImage)collection.AppendHorizontally();
-					else
-					{
-						// Vertical append composes the images opposite of desired order
-						collection.Reverse();
-						resultImg = (MagickImage)collection.AppendVertically();
-					}
-				}
-			}
-			catch (Exception e)
-			{
-				MessageBox.Show("There was an error: \n" + e.Message + "\nPlease try again.");
-				return;
-			}
+			DialogResult = DialogResult.Abort;
 		}
 	}
 }
